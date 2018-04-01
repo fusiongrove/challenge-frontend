@@ -1,0 +1,12 @@
+.custom-file-upload {
+  cursor: pointer;
+
+  input[type="file"] {
+    display: none;
+  }
+
+  .avatar {
+    width: 150px;
+    height: 150px;
+  }
+}

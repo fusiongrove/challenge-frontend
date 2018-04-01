@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import '../assets/scss/index.scss';
 export default class App extends React.Component {
   constructor(props) {
     super(props);
