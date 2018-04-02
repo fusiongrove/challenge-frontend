@@ -230,7 +230,7 @@ export default class User extends React.Component {
       <div className="container user-page">
         <div className="row">
           <div className="col-md-6 col-wrapper">
-            <h3 className="form-title">Create your profile</h3>
+            <h3 className="form-title">{ (this.slug) ? 'What to update your profile' : 'Create your profile' }</h3>
             <div className="edit-user-wrapper">
               <div className="row">
                 <div className="col-sm-12 upload-wrapper">

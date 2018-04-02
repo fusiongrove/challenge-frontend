@@ -36,6 +36,21 @@
           }
         }
 
+        .no-users-wrapper {
+          overflow: hidden;
+          border: 1px solid #dddddd;
+          border-radius: 8px;
+          margin: 15px 0;
+
+          .no-users {
+            margin: 20% 0;
+            color: #ff0011;
+            font-weight: $regular;
+            @include font-size(14);
+            text-align: center;
+          }
+        }
+
         .users-list {
           overflow: hidden;
           border: 1px solid #dddddd;
@@ -45,14 +60,6 @@
           display: flex;
           flex-wrap: wrap;
           width: 100%;
-
-          .no-users {
-            margin: 20% 0;
-            color: #ff0011;
-            font-weight: $regular;
-            @include font-size(14);
-            text-align: center;
-          }
 
           .user-block {
             position: relative;

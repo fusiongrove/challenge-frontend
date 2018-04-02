@@ -4,7 +4,9 @@
   "description": "Fusiongrove Challenge, ReactJS Front End",
   "author": "naveen",
   "scripts": {
-    "start": "webpack-dev-server"
+    "start": "webpack-dev-server",
+    "start:prod": "npm run build && cross-env NODE_ENV=production node server.js",
+    "build": "rm -rf build/* && cross-env NODE_ENV=production webpack -p --config webpack.production.config.js"
   },
   "license": "MIT",
   "engines": {

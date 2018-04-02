@@ -87,7 +87,9 @@ export default class Landing extends React.Component {
                     <div className="col-sm-12">
                       {
                         (!usersList || usersList.length == 0) ?
-                          <p className="no-users">No users found to display.</p> : <div className="users-list"> { usersMap }</div>
+                          <div className="no-users-wrapper">
+                            <p className="no-users">No users found to display.</p>
+                          </div> : <div className="users-list"> { usersMap }</div>
                       }
                     </div>
                   </div>
