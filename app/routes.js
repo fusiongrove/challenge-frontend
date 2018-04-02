@@ -9,6 +9,7 @@ const Router = props => (
   <ReactRouter {...props}>
     <Route path="/" component={Layout}>
       <IndexRoute component={Landing}/>
+      <Route path="/user" component={User} />
       <Route path="/user/:slug" component={User} />
       <Redirect from="*" to="/"/>
     </Route>

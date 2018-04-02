@@ -11,6 +11,7 @@ export default class ImageCropper extends React.Component {
     this.state = {
       file: this.props.file,
       previewImage: this.props.previewImage,
+      buttonName: 'Crop'
     };
 
     this.onCropperChange = this.onCropperChange.bind(this);
@@ -43,6 +44,10 @@ export default class ImageCropper extends React.Component {
      // handle Error
     };
 
+    this.setState({
+      buttonName: 'Uploading...'
+    });
+
     if (pixelCrop) {
       const croppedImg = await getCroppedImg(image, pixelCrop, 'test');
       if (croppedImg == 'data:,') {
@@ -56,7 +61,7 @@ export default class ImageCropper extends React.Component {
   }
 
   render() {
-    let {crop} = this.state;
+    const {crop, buttonName} = this.state;
 
     return (
       <div>
@@ -64,7 +69,7 @@ export default class ImageCropper extends React.Component {
           <ModalDialog id="image-cropper">
             <ReactCrop src={this.state.previewImage} crop={crop} onChange={this.onCropperChange}
                        onImageLoaded={this.onImageLoaded}/>
-            <button className="btn btn-crop" onClick={this.handleCrop}>Crop</button>
+            <button className="btn btn-crop" onClick={this.handleCrop}>{buttonName}</button>
           </ModalDialog>
         </ModalContainer>
       </div>
