@@ -76,6 +76,11 @@ export default class User extends React.Component {
     const _user = this.state.user;
     _user.avatar = url;
 
+    helpers.uploadHelper.upload(url)
+      .then((response) => {
+        console.log(response);
+      });
+
     this.setState({
       user: _user,
       isOnCropping: false
@@ -172,6 +177,11 @@ export default class User extends React.Component {
                     <label className="form-label">Email</label>
                     <input type="email" className="form-control" name="email" placeholder="Email"
                            onChange={this.handleChange} value={user.email} required={true}/>
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-sm-12">
+                    <button className="btn btn-success">Update</button>
                   </div>
                 </div>
               </form>

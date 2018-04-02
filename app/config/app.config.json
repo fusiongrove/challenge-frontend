@@ -1,6 +1,5 @@
 {
   "APP_NAME": "fusiongrove challenge-fe",
-  "CLOUDINARY_API_KEY": "147317852356368",
-  "CLOUDINARY_API_SECRET": "qUI8P69znISdsBLY598Wv0w-fdk",
-  "CLOUDINARY_CLOUD_NAME": "naveendinuka"
+  "CLOUDINARY_CLOUD_NAME": "naveendinuka",
+  "CLOUDINARY_UPLOAD_PRESET": "ttkwcpsc"
 }
