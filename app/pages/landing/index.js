@@ -1,5 +1,4 @@
 import React from 'react';
-import { ModalContainer, ModalDialog } from 'react-modal-dialog';
 
 export default class Landing extends React.Component {
   constructor(props) {
