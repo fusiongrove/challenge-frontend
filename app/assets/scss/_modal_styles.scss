@@ -16,3 +16,88 @@
     @include font-size(14);
   }
 }
+
+.app-alert {
+  padding: 20px !important;
+  width: 342px !important;
+  cursor: default;
+
+  &.success {
+    background-color: #E8F5E9;
+    color: #4CAF50;
+  }
+
+  &.info {
+    background-color: #e0f7fa;
+    color: #00bcd4;
+  }
+
+  &.warning {
+    background-color: #fff3e0;
+    color: #ff9800;
+  }
+
+  &.danger {
+    background-color: #FFEBEE;
+    color: #F44336;
+  }
+
+  .content {
+    position: relative;
+    .alert-heading {
+      line-height: 48px;
+      font-weight: $light;
+      @include font-size(24);
+    }
+    .alert-message {
+      margin: 0;
+      font-weight: $regular;
+      @include font-size(15);
+    }
+
+    .fa {
+      position: absolute;
+      top: 15px;
+      right: 5px;
+      cursor: pointer;
+    }
+  }
+
+  .alert-footer {
+    padding: 10px 0;
+    overflow: hidden;
+    text-align: center;
+
+    .btn-yes {
+      margin: 0 15px;
+      background-color: #4CAF50;
+      border: 1px solid #4CAF50;
+      color: #FFFFFF;
+      @include font-size(14);
+      transition: all 0.4s ease;
+      display: inline-block;
+      width: 100px;
+
+      &:hover {
+        color: #4CAF50;
+        background-color: #FFFFFF;
+      }
+    }
+
+    .btn-no {
+      margin: 0 15px;
+      background-color: #F44336;
+      border: 1px solid #F44336;
+      color: #FFFFFF;
+      @include font-size(14);
+      transition: all 0.4s ease;
+      display: inline-block;
+      width: 100px;
+
+      &:hover {
+        color: #F44336;
+        background-color: #FFFFFF;
+      }
+    }
+  }
+}
