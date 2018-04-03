@@ -4,7 +4,7 @@ const path = require('path');
 const httpProxy = require('http-proxy');
 
 const isProduction = process.env.NODE_ENV === 'production';
-const port = 7000;
+const port = process.env.PORT || 5000;
 const publicPath = isProduction ? path.resolve(__dirname, 'build') : path.resolve(__dirname, 'app');
 
 app.set("view options", {layout: false});
