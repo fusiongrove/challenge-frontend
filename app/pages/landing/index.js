@@ -1,14 +1,23 @@
 import React from 'react';
 
+import ConfirmationModal from "../../components/ConfirmationModal";
+
 export default class Landing extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      usersList: []
+      usersList: [],
+      isConfirmationRequired: false,
+      confirmationModalData: {
+        type: '',
+        message: '',
+        callbackData: {}
+      }
     };
 
     this.handleEditUser = this.handleEditUser.bind(this);
     this.handleDeleteUser = this.handleDeleteUser.bind(this);
+    this.confirmationCallback = this.confirmationCallback.bind(this);
   }
 
   componentDidMount() {
@@ -27,13 +36,38 @@ export default class Landing extends React.Component {
     const usersList = this.state.usersList;
     const userIndex = usersList.indexOfProperty('slug', slug);
 
-    usersList.splice(userIndex, 1);
-    helpers.storageHelper.addToStorage('users-list', usersList);
-    this.setState({ usersList: usersList });
+    this.setState({
+      isConfirmationRequired: true,
+      confirmationModalData: {
+        type: 'warning',
+        message: `Are you sure to delete ${usersList[userIndex].first_name}'s profile?`,
+        callbackData: { slug: slug }
+      }
+    });
+  }
+
+  confirmationCallback(status, data) {
+    if (status == 'yes') {
+      const usersList = this.state.usersList;
+      const userIndex = usersList.indexOfProperty('slug', data.slug);
+
+      usersList.splice(userIndex, 1);
+      helpers.storageHelper.addToStorage('users-list', usersList);
+      this.setState({ usersList: usersList });
+    }
+
+    this.setState({
+      isConfirmationRequired: false,
+      confirmationModalData: {
+        type: '',
+        message: '',
+        callbackData: {}
+      }
+    });
   }
 
   render() {
-    const { usersList } = this.state;
+    const { usersList, isConfirmationRequired, confirmationModalData } = this.state;
 
     const usersMap = usersList.map((user, key) => {
       return (
@@ -97,6 +131,17 @@ export default class Landing extends React.Component {
             </section>
           </div>
         </div>
+
+        {
+          (isConfirmationRequired) ?
+            <ConfirmationModal
+              type={ confirmationModalData.type }
+              message={ confirmationModalData.message }
+              callbackData={ confirmationModalData.callbackData }
+              confirmationCallback={this.confirmationCallback}
+            /> : null
+        }
+
       </div>
     );
   }
