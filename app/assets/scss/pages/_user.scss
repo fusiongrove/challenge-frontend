@@ -1,0 +1,113 @@
+.user-page {
+  .col-wrapper {
+    margin: 30px auto;
+
+    .form-title {
+      text-align: center;
+      @include font-size(22);
+      padding: 0 0 10px;
+      border-bottom: 1px solid #837f7f;
+      text-transform: capitalize;
+    }
+
+    .upload-wrapper {
+      text-align: center;
+
+      .custom-file-upload {
+        display: inline-block;
+
+        input[type="file"] {
+          display: none;
+        }
+
+        .avatar {
+          width: 150px;
+          height: 150px;
+        }
+
+        .btn-choose {
+          display: block;
+          margin: 15px auto;
+          background-color: #4d7bcf;
+          border: 1px solid #4d7bcf;
+          color: #FFFFFF;
+          @include font-size(14);
+          transition: all 0.4s ease;
+
+          &:hover {
+            color: #4d7bcf;
+            background-color: #FFFFFF;
+          }
+        }
+      }
+    }
+
+    .edit-user-form {
+      border: 1px solid #dddddd;
+      border-radius: 8px;
+      padding: 15px;
+
+      .form-row {
+        margin-bottom: 25px;
+
+        .form-label {
+          width: 100%;
+          color: #242222;
+          font-weight: $regular;
+          @include font-size(14);
+        }
+
+        .form-control {
+          border-color: #d9d5d5;
+          box-shadow: none;
+          outline: none;
+          height: 40px;
+
+          &:focus {
+            border-color: #92cf43;
+          }
+        }
+
+        .error {
+          margin: 0;
+          color: #ff0011;
+          font-weight: $regular;
+          @include font-size(14);
+          text-align: center;
+        }
+      }
+      .actions-wrapper {
+        text-align: center;
+
+        .btn-back {
+          margin: 0 15px;
+          background-color: #ff0011;
+          border: 1px solid #ff0011;
+          color: #FFFFFF;
+          @include font-size(14);
+          transition: all 0.4s ease;
+          width: 30%;
+
+          &:hover {
+            color: #ff0011;
+            background-color: #FFFFFF;
+          }
+        }
+
+        .btn-submit {
+          background-color: #92cf43;
+          border: 1px solid #92cf43;
+          color: #FFFFFF;
+          @include font-size(14);
+          transition: all 0.4s ease;
+          width: 50%;
+
+          &:hover {
+            color: #92cf43;
+            background-color: #FFFFFF;
+          }
+        }
+      }
+    }
+  }
+}

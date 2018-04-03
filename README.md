@@ -28,4 +28,3 @@ This challenge is designed to test your familiarity with ReactJS, RESTful APIs, 
 - Include documentation in a standalone Markdown file 
 - Good to have a cloud based deployment of your code i.e heroku
 
-

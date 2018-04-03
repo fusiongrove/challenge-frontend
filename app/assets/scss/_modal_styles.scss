@@ -1,0 +1,18 @@
+#image-cropper {
+  padding: 0 !important;
+  width: 40% !important;
+  min-height: 150px;
+  overflow: hidden;
+
+  .btn-crop {
+    margin: -6px 0 0;
+    padding: 15px;
+    border: 1px solid #0099FF;
+    border-radius: 0;
+    background-color: #0099FF;
+    color: #FFFFFF;
+    width: 100%;
+    transition: all 0.4s ease;
+    @include font-size(14);
+  }
+}
