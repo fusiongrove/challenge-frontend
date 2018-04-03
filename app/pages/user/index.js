@@ -148,6 +148,14 @@ export default class User extends React.Component {
       return userIndex.email == user.email;
     });
 
+    const isValidNumber = (val) => {
+      if ((val.length >= 9 && val.length < 15 )&& !isNaN(val)) {
+        return true;
+      } else {
+        return false
+      }
+    };
+
 
     if (!slug && storageUser && storageUser.length > 0) {
       this.setState({
@@ -196,6 +204,17 @@ export default class User extends React.Component {
         error: {
           isVisible: true,
           message: 'Please choose your calling code to proceed'
+        }
+      });
+
+      return;
+    }
+
+    if (!isValidNumber(user.contact_number)) {
+      this.setState({
+        error: {
+          isVisible: true,
+          message: 'Please enter a valid contact number'
         }
       });
 
