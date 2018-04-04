@@ -1,5 +1,5 @@
 import React from 'react';
-
+import moment from 'moment';
 import ConfirmationModal from "../../components/ConfirmationModal";
 
 export default class Landing extends React.Component {
@@ -83,6 +83,10 @@ export default class Landing extends React.Component {
             <div className="data-row">
               <label className="tag-name">Email</label>
               <label className="tag-value">{ user.email }</label>
+            </div>
+            <div className="data-row">
+              <label className="tag-name">Date of Birth</label>
+              <label className="tag-value">{ moment(user.dob).format('MMM DD, YYYY') }</label>
             </div>
             <div className="data-row">
               <label className="tag-name">Address</label>

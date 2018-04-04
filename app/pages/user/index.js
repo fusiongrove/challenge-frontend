@@ -1,6 +1,9 @@
 import React from 'react';
-
+import DatePicker from 'react-datepicker';
+import moment from 'moment';
 import 'array-index-of-property';
+import 'react-datepicker/src/stylesheets/datepicker.scss';
+
 import ImageCropper from '../../components/ImageCropper';
 import defaultAvatar from '../../assets/images/default_avatar.jpeg';
 
@@ -17,6 +20,7 @@ export default class User extends React.Component {
         calling_code: '0',
         contact_number: '',
         email: '',
+        dob: null,
         avatar: defaultAvatar,
       },
       countries: [],
@@ -38,6 +42,7 @@ export default class User extends React.Component {
     }
 
     this.handleChange = this.handleChange.bind(this);
+    this.handleDateChange = this.handleDateChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleImageChange = this.handleImageChange.bind(this);
     this.handleImageCrop = this.handleImageCrop.bind(this);
@@ -68,6 +73,7 @@ export default class User extends React.Component {
         window.location.href = "/";
       }
 
+      storageUser[0].dob = moment(storageUser[0].dob);
       this.setState({user: storageUser[0]});
     }
   }
@@ -102,6 +108,21 @@ export default class User extends React.Component {
       this.setState({calling_codes: _calling_codes});
     }
 
+  }
+
+  handleDateChange(date) {
+    const _user = this.state.user;
+    const _error = this.state.error;
+
+    if (_error.isVisible) {
+      _error.isVisible = false;
+      _error.message = '';
+
+      this.setState({error: _error});
+    }
+
+    _user.dob = date;
+    this.setState({user: _user});
   }
 
   handleImageChange(e) {
@@ -188,6 +209,17 @@ export default class User extends React.Component {
         error: {
           isVisible: true,
           message: 'Please choose your region to proceed'
+        }
+      });
+
+      return;
+    }
+
+    if (!user.dob || user.dob == '') {
+      this.setState({
+        error: {
+          isVisible: true,
+          message: 'Please select your date of birth to proceed'
         }
       });
 
@@ -285,10 +317,15 @@ export default class User extends React.Component {
                   </div>
                 </div>
                 <div className="row form-row">
-                  <div className="col-sm-12">
+                  <div className="col-sm-7">
                     <label className="form-label">Email</label>
                     <input type="email" className="form-control" name="email" placeholder="Email"
                            onChange={this.handleChange} value={user.email} disabled={(this.slug)} required={true}/>
+                  </div>
+                  <div className="col-sm-5">
+                    <label className="form-label">Date of Birth</label>
+                    <DatePicker selected={user.dob} placeholderText="MM/DD/YYYY" className="form-control" showYearDropdown
+                                maxDate={moment().subtract(1, "date")} onChange={this.handleDateChange} onChangeRaw={(e) => {e.preventDefault()}}/>
                   </div>
                 </div>
                 <div className="row form-row">
