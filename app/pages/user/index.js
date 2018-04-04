@@ -44,7 +44,7 @@ export default class User extends React.Component {
   }
 
   componentWillMount() {
-    if (this.slug) {
+    if (this.slug && this.storageUser[0]) {
       helpers.httpHelper.get(`https://restcountries.eu/rest/v2/region/${this.storageUser[0].region}`)
         .then((response) => {
           const selectedCountry = response.filter((element) => {
@@ -63,6 +63,10 @@ export default class User extends React.Component {
       const storageUser = usersList.filter((userIndex) => {
         return userIndex.slug == this.slug;
       });
+
+      if (storageUser.length <= 0) {
+        window.location.href = "/";
+      }
 
       this.setState({user: storageUser[0]});
     }
