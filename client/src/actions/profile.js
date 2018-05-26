@@ -96,10 +96,6 @@ export const addUser = data => dispatch => {
   // console.log('Not stringify new user data: ', data);
 
   axios.post(`${ProfileService}/addUser`, data)
-  .then(function (response) {
-    console.log(response);
-    return response.json();
-  })
   .then(function (json) {
     console.log('Add new user: ', json);
     dispatch(_addUser(json));
@@ -116,10 +112,6 @@ export const addUser = data => dispatch => {
  */
 export const editUser = data => dispatch => {
   axios.put(`${ProfileService}/editUser`, data)
-  .then(function (response) {
-    console.log(response);
-    return response.json();
-  })
   .then(function (json) {
     console.log('Edit user: ', json);
     dispatch(_editUser(json));
@@ -136,10 +128,6 @@ export const editUser = data => dispatch => {
  */
 export const deleteUser = data => dispatch => {
   axios.delete(`${ProfileService}/deleteUser`, data)
-  .then(function (response) {
-    console.log(response);
-    return response.json();
-  })
   .then(function (json) {
     console.log('Delete user: ', json);
     dispatch(_deleteUser(json));
@@ -156,10 +144,6 @@ export const deleteUser = data => dispatch => {
  */
 export const searchUser = data => dispatch => {
   axios.get(`${ProfileService}/searchUser`, { params : data })
-  .then(function (response) {
-    console.log(response);
-    return response.json();
-  })
   .then(function (json) {
     console.log('Search user: ', json);
     dispatch(_searchUser(json));

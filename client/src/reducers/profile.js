@@ -18,7 +18,7 @@ export default function Profile(state = initialState, action) {
       });
     case ADD_USER:
       return Object.assign({}, state, {
-        users: state.users.concat(action.payload.users)
+        users: state.users.concat(action.payload.data)
       });
     case EDIT_USER:
       return Object.assign({}, state, {
