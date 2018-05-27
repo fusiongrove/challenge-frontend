@@ -43,13 +43,13 @@ class DialogUser extends React.Component {
           <Grid container spacing={24}>
             <Grid item xs={5}>
               <Dropzone
-                style={classes.image}
+                className={classes.image}
                 onDrop={this.props.onDrop}
                 multiple={false}
                 accept="image/*"
               >
                 <img
-                  style={classes.image}
+                  className={classes.image}
                   src={this.props.thumbImage}
                 />
                 <Typography component="p">
