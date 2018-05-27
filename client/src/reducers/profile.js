@@ -21,12 +21,14 @@ export default function Profile(state = initialState, action) {
         users: state.users.concat(action.payload.data)
       });
     case EDIT_USER:
+    let userid=JSON.parse(action.payload.config.data).id;
       return Object.assign({}, state, {
-        users: action.payload
+        users: state.users.filter((obj)=>obj._id!==userid).concat(action.payload.data)
       });
     case DELETE_USER:
+    let deluserid=JSON.parse(action.payload.config.data).id;
       return Object.assign({}, state, {
-        users: action.payload
+        users: state.users.filter((obj)=>obj._id!==deluserid)
       });
     case SEARCH_USER:
       return Object.assign({}, state, {

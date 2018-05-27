@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-import classNames from 'classnames';
+//import classNames from 'classnames';
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
 import Dropzone from "react-dropzone";
@@ -27,11 +27,11 @@ const styles = theme => ({
     marginRight: theme.spacing.unit,
   },
   margin: {
-    marginTop: 20
+    marginTop: 21
   }
 });
 
-class AddUser extends React.Component {
+class DialogUser extends React.Component {
   render() {
     const { classes } = this.props;
     return (
@@ -63,8 +63,9 @@ class AddUser extends React.Component {
                 label="First Name"
                 type="text"
                 fullWidth
-                error={false}
+                error={this.props.errorStatus.fnameError}
                 onChange={this.props.handleChange('fname')}
+                value={this.props.fname}
               />
               <TextField
                 required
@@ -74,7 +75,8 @@ class AddUser extends React.Component {
                 type="text"
                 fullWidth
                 onChange={this.props.handleChange('lname')}
-                error={false}
+                error={this.props.errorStatus.lnameError}
+                value={this.props.lname}
               />
               <TextField
                 required
@@ -86,8 +88,9 @@ class AddUser extends React.Component {
                 InputLabelProps={{
                   shrink: true,
                 }}
-                error={false}
+                error={this.props.errorStatus.dobError}
                 onChange={this.props.handleChange('dob')}
+                value={this.props.dob}
               />
             </Grid>
             <Grid item xs={12}>
@@ -99,11 +102,12 @@ class AddUser extends React.Component {
                 label="Address"
                 type="text"
                 fullWidth
-                error={false}
+                error={this.props.errorStatus.addressError}
                 onChange={this.props.handleChange('address')}
+                value={this.props.address}
               />
               <Grid container spacing={24}>
-                <Grid item xs={4}>
+                <Grid item xs={5}>
                   <TextField
                     id="country_code"
                     select
@@ -111,6 +115,7 @@ class AddUser extends React.Component {
                     onChange={this.props.handleChange('ccode')}
                     margin="normal"
                     className={classes.margin}
+                    fullWidth
                   >
                     {CCode.map(option => (
                       <MenuItem key={option.value} value={option.value}>
@@ -119,16 +124,17 @@ class AddUser extends React.Component {
                     ))}
                   </TextField>
                 </Grid>
-                <Grid item xs={8}>
+                <Grid item xs={7}>
                   <TextField
                     required
                     margin="dense"
                     id="contactNo"
                     label="Contact No"
                     type="text"
-                    pattern="^[0-9]*$"
-                    error={false}
+                    error={this.props.errorStatus.connectError}
                     onChange={this.props.handleChange('contact')}
+                    fullWidth
+                    value={this.props.contact}
                   />
                 </Grid>
               </Grid>
@@ -139,8 +145,9 @@ class AddUser extends React.Component {
                 label="Email"
                 type="email"
                 fullWidth
-                error={false}
+                error={this.props.errorStatus.emailError}
                 onChange={this.props.handleChange('email')}
+                value={this.props.email}
               />
             </Grid>
           </Grid>
@@ -149,8 +156,8 @@ class AddUser extends React.Component {
   }
 }
 
-AddUser.propTypes = {
+DialogUser.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(AddUser);
+export default withStyles(styles)(DialogUser);

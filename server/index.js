@@ -1,5 +1,6 @@
 const express = require("express");
 const app = express();
+const fs = require('fs');
 const path = require("path");
 const server = require("http").Server(app);
 const cors = require("cors")();
@@ -25,15 +26,15 @@ app.use(
 
 app.use(cors);
 
-// const storage = multer.diskStorage({
-//   destination: __dirname +'/media/',
-//   filename(req, file, cb) {
-//     console.log(file);
-//     cb(null, `${new Date()}-${file.originalname}`);
-//   }
-// });
-//
-// const upload = multer({ storage });
+const storage = multer.diskStorage({
+  destination: __dirname +'/media/',
+  filename(req, file, cb) {
+    console.log('multer',file);
+    cb(null, `${new Date()}-${file.originalname}`);
+  }
+});
+
+const upload = multer({ storage });
 
 /**
  * get user list to home page
@@ -41,7 +42,7 @@ app.use(cors);
  * @param object req
  * @return json
  */
-app.get("/getUsers", (req, res) => {
+app.get("/getUsers", (req, res,next) => {
   Profile.find( {} , (err,user) => {
     if (err) { return next(err); }
     res.json(user);
@@ -54,12 +55,12 @@ app.get("/getUsers", (req, res) => {
  * @param object req
  * @return json
  */
-app.post("/addUser", (req, res) => {
-  console.log('asasas');
+app.post("/addUser",upload.single('file'), (req, res) => {
   let newUser = new Profile({
     firstname: req.body.fname,
     lastname: req.body.lname,
     address: req.body.address,
+    ccode: req.body.ccode,
     contact: req.body.contact,
     dob: req.body.dob,
     email: req.body.email,
@@ -71,13 +72,29 @@ app.post("/addUser", (req, res) => {
   });
 });
 
+app.post('/userfile',upload.single('file'), function(req, res) {
+
+    let file = __dirname + '/media/' +req.body.filename+'.'+req.file.mimetype.substring(6);
+
+      fs.rename(req.file.path, file, function(err) {
+        if (err) {
+          res.send(500);
+        } else {
+          res.json({
+            message: 'File uploaded successfully',
+            filename: req.file.filename
+          });
+        }
+      });
+});
+
 /**
  * edit selected user details
  * handles PUT request
  * @param object req
  * @return json
  */
-app.put("/editUser", (req, res) => {
+app.put("/editUser", (req, res,next) => {
 
   let user = {};
 
@@ -89,7 +106,6 @@ app.put("/editUser", (req, res) => {
 
   Profile.findOneAndUpdate({_id:req.body.id}, user,{ "new": true })
     .then((response) => {
-      console.log('Edit user response ',response);
       res.json(response);
     })
     .then((err) => next(err));
@@ -101,12 +117,9 @@ app.put("/editUser", (req, res) => {
  * @param object req
  * @return json
  */
-app.delete("/deleteUser", (req, res) => {
-  Profile
-    .find( {_id:req.body.id} )
-    .remove()
-    .exec((err,users) => {
-        if (err) { console.log('Delete user error: ', err); }
+app.delete("/deleteUser", (req, res,next) => {
+  Profile.find({_id:req.body.id}).remove().exec((err,users) => {
+        if (err) {return next(err); }
         res.json(users);
     });
 });

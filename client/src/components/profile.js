@@ -15,42 +15,22 @@ import TableRow from '@material-ui/core/TableRow';
 import Avatar from '@material-ui/core/Avatar';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
-import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import MenuItem from '@material-ui/core/MenuItem';
+import DialogUser from './dialogUser';
 import {
   getUsers,
   addUser,
   editUser,
   deleteUser,
-  searchUser
+  searchUser,
+  uploadPic
 } from "../actions/profile";
 
-import Dropzone from "react-dropzone";
-import Typography from '@material-ui/core/Typography';
-import AddUser from './addUser';
 
-const ccode = [
-{
-  value: 'USD',
-  label: '$',
-},
-{
-  value: 'EUR',
-  label: 'Afghanistan (+93)',
-},
-{
-  value: 'BTC',
-  label: '฿',
-},
-{
-  value: 'JPY',
-  label: '¥',
-},
-];
+
 
 const styles = theme => ({
   root: {
@@ -80,13 +60,6 @@ const styles = theme => ({
     '&:nth-of-type(odd)': {
       backgroundColor: theme.palette.background.default,
     },
-  },
-  textField: {
-    marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit,
-  },
-  margin: {
-    marginTop: 20
   }
 });
 
@@ -100,21 +73,83 @@ const CustomTableCell = withStyles(theme => ({
   },
 }))(TableCell);
 
+function validateEmail(email) {
+  var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  return re.test(email);
+};
+
+const errorLog = {};
+
+function validateForm(data) {
+  if(data.fname === "") {
+    console.log("*first name cannot be empty");
+    errorLog.fnameError = true;
+    return false;
+  }
+
+  if(data.lname === "") {
+    console.log("*last name cannot be empty");
+    errorLog.lnameError = true;
+    return false;
+  }
+
+  if(data.address === "") {
+    console.log("*address cannot be empty");
+    errorLog.addressError = true;
+    return false;
+  }
+
+  if(data.contact === "") {
+    console.log("*contact no cannot be empty");
+    errorLog.connectError = true;
+    return false;
+  }
+  else if(isNaN(data.contact)||data.contact.indexOf(" ")!==-1) {
+    console.log("*enter numeric value");
+    errorLog.connectError = true;
+    return false;
+  }
+
+  if(data.dob === "") {
+    console.log("*date of birth cannot be empty");
+    errorLog.dobError = true;
+    return false;
+  }
+
+  if(data.email === "") {
+    console.log("*email cannot be empty");
+    errorLog.emailError = true;
+    return false;
+  }
+  else if (!validateEmail(data.email)) {
+    console.log("*email is not valid");
+    errorLog.emailError = true;
+    return false;
+  }
+
+  else {
+    return true;
+  }
+};
+
 class Profile extends React.Component {
 
   constructor() {
     super();
     this.state = {
       open: false,
-      ccode: 'EUR',
-      image: "",
+      id: "",
       fname: "",
       lname:"",
       dob:"",
       address:"",
+      ccode: "+94",
       contact:"",
       email:"",
-      thumbImage:""
+      image: "",
+      thumbImage:"",
+      type: "",
+      errorStatus: {}
     };
   }
 
@@ -122,8 +157,42 @@ class Profile extends React.Component {
     this.props.GetUsers();
   }
 
-  handleClickOpen = () => {
-    this.setState({ open: true });
+  handleClickOpen = (type, data) => {
+    if(type === 'add'){
+      this.setState({
+        type: "Add New ",
+        id: "",
+        fname: "",
+        lname:"",
+        dob:"",
+        address:"",
+        ccode: "+94",
+        contact:"",
+        email:"",
+        image: "",
+        thumbImage:"",
+        open: true
+      });
+    } else {
+      this.setState({
+        type: "Update ",
+        id: data._id,
+        fname: data.firstname,
+        lname: data.lastname,
+        dob: data.dob,
+        address: data.address,
+        ccode: data.ccode,
+        contact: data.contact,
+        email: data.email,
+        image: data.image,
+        thumbImage:"",
+        open: true,
+      });
+    }
+  };
+
+  handleClickDelete = id => {
+    this.props.DeleteUser({id: id});
   };
 
   handleClose = () => {
@@ -131,17 +200,46 @@ class Profile extends React.Component {
   };
 
   handleSave = () => {
-    console.log('saveeeeeee');
-    this.setState({ open: false });
-    this.props.AddUser({
-      fname: this.state.fname,
-      lname: this.state.lname,
-      address: this.state.address,
-      contact: this.state.contact,
-      dob: this.state.dob,
-      email: this.state.email,
-      image: this.state.filename,
-    })
+    if(this.state.type === "Add New ") {
+
+      const data = {
+        fname: this.state.fname,
+        lname: this.state.lname,
+        address: this.state.address,
+        contact: this.state.contact,
+        dob: this.state.dob,
+        email: this.state.email
+      };
+
+      if(validateForm(data)){
+        this.setState({ open: false });
+        this.props.AddUser({
+          fname: this.state.fname,
+          lname: this.state.lname,
+          address: this.state.address,
+          ccode: this.state.ccode,
+          contact: this.state.contact,
+          dob: this.state.dob,
+          email: this.state.email,
+          image: this.state.filename
+        });
+      } else {
+        this.setState({errorStatus: errorLog});
+      }
+
+    } else if (this.state.type === "Update ") {
+        this.props.EditUser({
+          id: this.state.id,
+          firstname: this.state.fname,
+          lastname: this.state.lname,
+          address: this.state.address,
+          ccode: this.state.ccode,
+          contact: this.state.contact,
+          dob: this.state.dob,
+          email: this.state.email,
+          image: this.state.filename
+        });
+    }
   };
 
   handleChange = name => event => {
@@ -151,12 +249,13 @@ class Profile extends React.Component {
   };
 
   onDrop = files => {
-    const file = files[0];
+    let file = files[0];
     this.setState({
       files: file,
       thumbImage: files[0].preview,
       filename:file.name
     });
+    this.props.uploadPic({file:file});
   };
 
 
@@ -168,7 +267,7 @@ class Profile extends React.Component {
         <Grid item xs={12} sm={6}></Grid>
         <Grid item xs={6} sm={4}></Grid>
         <Grid item xs={6} sm={2} >
-          <Button className={classes.button} variant="raised" size="small" color="primary" onClick={this.handleClickOpen}>
+          <Button className={classes.button} variant="raised" size="small" color="primary" onClick={() => this.handleClickOpen('add', null)}>
             <Save className={classNames(classes.leftIcon, classes.iconSmall)} />
             Add User
           </Button>
@@ -192,19 +291,19 @@ class Profile extends React.Component {
                 return (
                   <TableRow className={classes.row} key={n._id}>
                     <CustomTableCell>
-                    <Avatar aria-label="user" className={classes.button} src={'http://localhost:3030/media/' + n.firstname + n.lastname + '.png'}>
+                    <Avatar aria-label="user" className={classes.button} src={'http://localhost:3030/media/' + n.image}>
                     </Avatar>
                     </CustomTableCell>
                     <CustomTableCell>{n.firstname + ' ' + n.lastname}</CustomTableCell>
                     <CustomTableCell>{n.address}</CustomTableCell>
-                    <CustomTableCell>{n.contact}</CustomTableCell>
+                    <CustomTableCell>{n.ccode + n.contact}</CustomTableCell>
                     <CustomTableCell>{n.dob}</CustomTableCell>
                     <CustomTableCell>{n.email}</CustomTableCell>
                     <CustomTableCell>
-                      <Button aria-label="edit" className={classes.button} size="small">
+                      <Button aria-label="edit" className={classes.button} size="small" onClick={() => this.handleClickOpen('edit', n)}>
                         <EditIcon />
                       </Button>
-                      <Button aria-label="delete" className={classes.button} size="small">
+                      <Button aria-label="delete" className={classes.button} size="small" onClick={() => this.handleClickDelete(n._id)}>
                         <DeleteIcon />
                       </Button>
                     </CustomTableCell>
@@ -221,13 +320,22 @@ class Profile extends React.Component {
         onClose={this.handleClose}
         aria-labelledby="form-dialog-title"
       >
-        <DialogTitle id="form-dialog-title">Add New User</DialogTitle>
+        <DialogTitle id="form-dialog-title">{this.state.type} User</DialogTitle>
         <DialogContent>
-          <AddUser
+          <DialogUser
             handleChange={this.handleChange}
             onDrop={this.onDrop}
             thumbImage={this.state.thumbImage}
+            id={this.state.id}
+            fname={this.state.fname}
+            lname={this.state.lname}
+            dob={this.state.dob}
+            address={this.state.address}
             ccode={this.state.ccode}
+            contact={this.state.contact}
+            email={this.state.email}
+            image={this.state.image}
+            errorStatus={this.state.errorStatus}
           />
         </DialogContent>
         <DialogActions>
@@ -268,6 +376,9 @@ let mapDispatchToProps = dispatch => {
     SearchUser: data => {
       dispatch(searchUser(data));
     },
+    uploadPic:data=>{
+      dispatch(uploadPic(data));
+    }
   };
 };
 

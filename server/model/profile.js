@@ -5,6 +5,7 @@ const Profile = new Schema({
     firstname:String,
     lastname:String,
     address:String,
+    ccode:String,
     contact:String,
     dob:String,
     email:String,

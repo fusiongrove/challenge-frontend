@@ -1,148 +1,148 @@
 const CCode =
 [
   {
-    value: "Abkhazia",
-    label: "+99544"
+    value: "+99544",
+    label: "Abkhazia (+99544)"
   },
   {
-    value: "Afghanistan",
-    label: "+93"
+    value: "+93",
+    label: "Afghanistan (+93)"
   },
   {
-    value: "Åland Islands",
-    label: "+35818"
+    value: "+35818",
+    label: "Åland Islands (+35818)"
   },
   {
-    value: "Albania",
-    label: "+355"
+    value: "+355",
+    label: "Albania (+355)"
   },
   {
-    value: "Algeria",
-    label: "+213"
+    value: "+213",
+    label: "Algeria (+213)"
   },
   {
-    value: "American Samoa",
-    label: "+1684"
+    value: "+1684",
+    label: "American Samoa (+1684)"
   },
   {
-    value: "Andorra",
-    label: "+376"
+    value: "+376",
+    label: "Andorra (+376)"
   },
   {
-    value: "Angola",
-    label: "+244"
+    value: "+244",
+    label: "Angola (+244)"
   },
   {
-    value: "Anguilla",
-    label: "+1264"
+    value: "+1264",
+    label: "Anguilla (+1264)"
   },
   {
-    value: "Antigua and Barbuda",
-    label: "+1268"
+    value: "+1268",
+    label: "Antigua and Barbuda (+1268)"
   },
   {
-    value: "Argentina",
-    label: "+54"
+    value: "+54",
+    label: "Argentina (+54)"
   },
   {
-    value: "Armenia",
-    label: "+374"
+    value: "+374",
+    label: "Armenia (+374)"
   },
   {
-    value: "Aruba",
-    label: "+297"
+    value: "+297",
+    label: "Aruba (+297)"
   },
   {
-    value: "Ascension",
-    label: "+247"
+    value: "+247",
+    label: "Ascension (+247)"
   },
   {
-    value: "Australia",
-    label: "+61"
+    value: "+61",
+    label: "Australia (+61)"
   },
   {
-    value: "Australian External Territories",
-    label: "+672"
+    value: "+672",
+    label: "Australian External Territories (+672)"
   },
   {
-    value: "Austria",
-    label: "+43"
+    value: "+43",
+    label: "Austria (+43)"
   },
   {
-    value: "Azerbaijan",
-    label: "+994"
+    value: "+994",
+    label: "Azerbaijan (+994)"
   },
   {
-    value: "Bahamas",
-    label: "+1242"
+    value: "+1242",
+    label: "Bahamas (+1242)"
   },
   {
-    value: "Bahrain",
-    label: "+973"
+    value: "+973",
+    label: "Bahrain (+973)"
   },
   {
-    value: "Bangladesh",
-    label: "+880"
+    value: "+880",
+    label: "Bangladesh (+880)"
   },
   {
-    value: "Barbados",
-    label: "+1246"
+    value: "+1246",
+    label: "Barbados (+1246)"
   },
   {
-    value: "Barbuda",
-    label: "+1268"
+    value: "+1268",
+    label: "Barbuda (+1268)"
   },
   {
-    value: "Belarus",
-    label: "+375"
+    value: "+375",
+    label: "Belarus (+375)"
   },
   {
-    value: "Belgium",
-    label: "+32"
+    value: "+32",
+    label: "Belgium (+32)"
   },
   {
-    value: "Belize",
-    label: "+501"
+    value: "+501",
+    label: "Belize (+501)"
   },
   {
-    value: "Benin",
-    label: "+229"
+    value: "+229",
+    label: "Benin (+229)"
   },
   {
-    value: "Bermuda",
-    label: "+1441"
+    value: "+1441",
+    label: "Bermuda (+1441)"
   },
   {
-    value: "Bhutan",
-    label: "+975"
+    value: "+975",
+    label: "Bhutan (+975)"
   },
   {
-    value: "Bolivia",
-    label: "+591"
+    value: "+591",
+    label: "Bolivia (+591)"
   },
   {
-    value: "Bonaire",
-    label: "+5997"
+    value: "+5997",
+    label: "Bonaire (+5997)"
   },
   {
-    value: "Bosnia and Herzegovina",
-    label: "+387"
+    value: "+387",
+    label: "Bosnia and Herzegovina (+387)"
   },
   {
-    value: "Botswana",
-    label: "+267"
+    value: "+267",
+    label: "Botswana (+267)"
   },
   {
-    value: "Brazil",
-    label: "+55"
+    value: "+55",
+    label: "Brazil (+55)"
   },
   {
-    value: "British Indian Ocean Territory",
-    label: "+246"
+    value: "+246",
+    label: "British Indian Ocean Territory (+246)"
   },
   {
-    value: "British Virgin Islands",
-    label: "+1284"
+    value: "+1284",
+    label: "British Virgin Islands (+1284)"
   },
   {
     value: "Brunei Darussalam",
@@ -933,8 +933,8 @@ const CCode =
     label: "+34"
   },
   {
-    value: "Sri Lanka",
-    label: "+94"
+    value: "+94",
+    label: "Sri Lanka (+94)"
   },
   {
     value: "Sudan",
@@ -1085,20 +1085,20 @@ const CCode =
     label: "+681"
   },
   {
-    value: "Yemen",
-    label: "+967"
+    value: "+967",
+    label: "Yemen (+967)"
   },
   {
-    value: "Zambia",
-    label: "+260"
+    value: "+260",
+    label: "Zambia (+260)"
   },
   {
-    value: "Zanzibar",
-    label: "+255"
+    value: "+255",
+    label: "Zanzibar (+255)"
   },
   {
-    value: "Zimbabwe",
-    label: "+263"
+    value: "+263",
+    label: "Zimbabwe (+263)"
   }
 ]
 

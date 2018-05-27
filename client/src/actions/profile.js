@@ -4,7 +4,9 @@ import {
   ADD_USER,
   EDIT_USER,
   DELETE_USER,
-  SEARCH_USER
+  SEARCH_USER,
+  UPLOAD_SUCCESS,
+  UPLOAD_FAIL
 } from "../constants/profile";
 
 const ProfileService = 'http://localhost:3030';
@@ -69,6 +71,20 @@ function _searchUser(data) {
   };
 }
 
+export function uploadSuccess({ data }) {
+  return {
+    type: UPLOAD_SUCCESS,
+    payload:data,
+  };
+}
+
+export function uploadFail(error) {
+  return {
+    type: UPLOAD_FAIL,
+    payload:error,
+  };
+}
+
 /**
  * Request for get users
  * @param data
@@ -91,11 +107,7 @@ export const getUsers = () => dispatch => {
  * @returns {func}
  */
 export const addUser = data => dispatch => {
-
-  // console.log('stringify new user data: ', queryString.stringify(data));
-  // console.log('Not stringify new user data: ', data);
-
-  axios.post(`${ProfileService}/addUser`, data)
+axios.post(`${ProfileService}/addUser`, data)
   .then(function (json) {
     console.log('Add new user: ', json);
     dispatch(_addUser(json));
@@ -104,6 +116,18 @@ export const addUser = data => dispatch => {
     console.log('Add user error ', error);
   });
 };
+
+export const uploadPic=({file})=>{
+    let data = new FormData();
+    data.append('file', file);
+    data.append('filename', file.name.substring(0, file.name.indexOf(".")));
+
+    return (dispatch) => {
+      return  axios.post(`${ProfileService}/userfile`, data)
+                .then(response => dispatch(uploadSuccess(response)))
+                .catch(error => dispatch(uploadFail(error)))
+    }
+}
 
 /**
  * Request for edit user
@@ -127,7 +151,7 @@ export const editUser = data => dispatch => {
  * @returns {func}
  */
 export const deleteUser = data => dispatch => {
-  axios.delete(`${ProfileService}/deleteUser`, data)
+  axios.delete(`${ProfileService}/deleteUser`, { data: data, params: { force: true }})
   .then(function (json) {
     console.log('Delete user: ', json);
     dispatch(_deleteUser(json));
