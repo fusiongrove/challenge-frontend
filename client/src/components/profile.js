@@ -21,6 +21,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogUser from './dialogUser';
+import indigo from '@material-ui/core/colors/indigo';
 import {
   getUsers,
   addUser,
@@ -61,6 +62,10 @@ const styles = theme => ({
       backgroundColor: theme.palette.background.default,
     },
   },
+  tablePadding: {
+    paddingLeft: 20,
+    paddingRight: 20
+  },
   avatar: {
     margin: 10,
   },
@@ -72,8 +77,9 @@ const styles = theme => ({
 
 const CustomTableCell = withStyles(theme => ({
   head: {
-    backgroundColor: theme.palette.common.black,
+    backgroundColor: indigo[300],
     color: theme.palette.common.white,
+    fontSize: 14
   },
   body: {
     fontSize: 14,
@@ -199,21 +205,21 @@ class Profile extends React.Component {
         thumbImage:"",
         open: true
       });
-    } else {
-      this.setState({
-        type: "Update ",
-        id: data._id,
-        fname: data.firstname,
-        lname: data.lastname,
-        dob: data.dob,
-        address: data.address,
-        ccode: data.ccode,
-        contact: data.contact,
-        email: data.email,
-        image: data.image,
-        thumbImage: this.state.thumbImage,
-        open: true,
-      });
+    } else if (type === 'edit') {
+        this.setState({
+          type: "Update ",
+          id: data._id,
+          fname: data.firstname,
+          lname: data.lastname,
+          dob: data.dob,
+          address: data.address,
+          ccode: data.ccode,
+          contact: data.contact,
+          email: data.email,
+          image: data.image,
+          thumbImage: ProfileService + "/media/" + data.image,
+          open: true,
+        });
     }
   };
 
@@ -252,9 +258,28 @@ class Profile extends React.Component {
     } else if (this.state.type === "Update ") {
         this.setState({
           open: false,
-          openEditAlert: true
+          openEditAlert: true,
         });
     }
+  };
+
+  handleCloseEditAlert = () => {
+    this.setState({ openEditAlert: false });
+  };
+
+  handleClickEdit = () => {
+    this.props.EditUser({
+      id: this.state.id,
+      firstname: this.state.fname,
+      lastname: this.state.lname,
+      address: this.state.address,
+      ccode: this.state.ccode,
+      contact: this.state.contact,
+      dob: this.state.dob,
+      email: this.state.email,
+      image: this.state.filename
+    });
+    this.setState({ openEditAlert: false });
   };
 
   handleClickOpenDeleteAlert = id => {
@@ -269,26 +294,6 @@ class Profile extends React.Component {
   handleClickDelete = id => {
     this.props.DeleteUser({id: id});
     this.setState({ openDeleteAlert: false });
-  };
-
-  handleCloseEditAlert = () => {
-    this.setState({ openEditAlert: false });
-  };
-
-  handleClickEdit = id => {
-    this.props.DeleteUser({id: id});
-    this.setState({ openEditAlert: false });
-    this.props.EditUser({
-      id: this.state.id,
-      firstname: this.state.fname,
-      lastname: this.state.lname,
-      address: this.state.address,
-      ccode: this.state.ccode,
-      contact: this.state.contact,
-      dob: this.state.dob,
-      email: this.state.email,
-      image: this.state.filename
-    });
   };
 
   render() {
@@ -309,30 +314,30 @@ class Profile extends React.Component {
           <Table className={classes.table}>
             <TableHead>
               <TableRow>
-                <CustomTableCell></CustomTableCell>
-                <CustomTableCell>Name</CustomTableCell>
-                <CustomTableCell>Address</CustomTableCell>
-                <CustomTableCell>Contact No</CustomTableCell>
-                <CustomTableCell>Date of Birth</CustomTableCell>
-                <CustomTableCell>Email</CustomTableCell>
-                <CustomTableCell></CustomTableCell>
+                <CustomTableCell className={classes.tablePadding}></CustomTableCell>
+                <CustomTableCell className={classes.tablePadding}><center>Name</center></CustomTableCell>
+                <CustomTableCell className={classes.tablePadding}><center>Address</center></CustomTableCell>
+                <CustomTableCell className={classes.tablePadding}><center>Contact No</center></CustomTableCell>
+                <CustomTableCell className={classes.tablePadding}><center>Date of Birth</center></CustomTableCell>
+                <CustomTableCell className={classes.tablePadding}><center>Email</center></CustomTableCell>
+                <CustomTableCell className={classes.tablePadding}><center></center></CustomTableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {this.props.users.map(n => {
                 return (
                   <TableRow className={classes.row} key={n._id}>
-                    <CustomTableCell>
+                    <CustomTableCell className={classes.tablePadding}>
                       <Avatar
                         src={`${ProfileService}/media/` + n.image}
                         className={classNames(classes.avatar, classes.bigAvatar)}
                       />
                     </CustomTableCell>
-                    <CustomTableCell>{n.firstname + ' ' + n.lastname}</CustomTableCell>
-                    <CustomTableCell>{n.address}</CustomTableCell>
-                    <CustomTableCell>{n.ccode + n.contact}</CustomTableCell>
-                    <CustomTableCell>{n.dob}</CustomTableCell>
-                    <CustomTableCell>{n.email}</CustomTableCell>
+                    <CustomTableCell className={classes.tablePadding}><center>{n.firstname + ' ' + n.lastname}</center></CustomTableCell>
+                    <CustomTableCell className={classes.tablePadding}><center>{n.address}</center></CustomTableCell>
+                    <CustomTableCell className={classes.tablePadding}><center>{n.ccode + n.contact}</center></CustomTableCell>
+                    <CustomTableCell className={classes.tablePadding}><center>{n.dob}</center></CustomTableCell>
+                    <CustomTableCell className={classes.tablePadding}><center>{n.email}</center></CustomTableCell>
                     <CustomTableCell>
                       <Button aria-label="edit" className={classes.button} size="small" onClick={() => this.handleClickOpen('edit', n)}>
                         <EditIcon />

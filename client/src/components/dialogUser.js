@@ -51,6 +51,7 @@ class DialogUser extends React.Component {
                 <img
                   className={classes.image}
                   src={this.props.thumbImage}
+                  alt=""
                 />
                 <Typography component="p">
                   Try dropping some files here, or click to select files to
