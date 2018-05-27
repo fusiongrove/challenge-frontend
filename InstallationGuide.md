@@ -1,9 +1,11 @@
-# Installation Guide
+# User Management Application
 
-- Clone repository.
-- Move 'client' folder. (cd client)
-- Install npm modules. (npm install)
-- Run the project npm start
-- Move 'server' folder. (cd server)
-- Install npm modules. (npm install)
-- Run the project npm start
+### Installation Guide
+1. Clone repository.
+2. Open 'client' folder. (cd client)
+3. Install npm modules. (npm install or yarn install)
+4. To build the client app run (npm build or yarn build)
+5. Run the project npm start
+6. Open 'server' folder. (cd server)
+7. Install npm modules. (npm install or yarn install)
+8. Run the project npm start

@@ -8,10 +8,12 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const multer = require("multer");
 const Profile = require("./model/profile");
-const port = 3030;
+require("dotenv").config();
+const port = process.env.PORT || 3030;
 
 mongoose.Promise = global.Promise;
-mongoose.connect("mongodb://localhost:27017/UPAPP");
+//mongoose.connect("mongodb://localhost:27017/UPAPP");
+mongoose.connect(process.env.DB_ROMTE);
 
 mongoose.connection.on("connected", function() {
   console.log(
