@@ -9,7 +9,7 @@ import {
   UPLOAD_FAIL
 } from "../constants/profile";
 
-const ProfileService = 'http://localhost:3030';
+const ProfileService = process.env.REACT_APP_SEREVER;
 
 /**
  * Get users
