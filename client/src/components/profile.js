@@ -324,31 +324,34 @@ class Profile extends React.Component {
               </TableRow>
             </TableHead>
             <TableBody>
-              {this.props.users.map(n => {
-                return (
-                  <TableRow className={classes.row} key={n._id}>
-                    <CustomTableCell className={classes.tablePadding}>
-                      <Avatar
-                        src={`${ProfileService}/media/` + n.image}
-                        className={classNames(classes.avatar, classes.bigAvatar)}
-                      />
-                    </CustomTableCell>
-                    <CustomTableCell className={classes.tablePadding}><center>{n.firstname + ' ' + n.lastname}</center></CustomTableCell>
-                    <CustomTableCell className={classes.tablePadding}><center>{n.address}</center></CustomTableCell>
-                    <CustomTableCell className={classes.tablePadding}><center>{n.ccode + n.contact}</center></CustomTableCell>
-                    <CustomTableCell className={classes.tablePadding}><center>{n.dob}</center></CustomTableCell>
-                    <CustomTableCell className={classes.tablePadding}><center>{n.email}</center></CustomTableCell>
-                    <CustomTableCell>
-                      <Button aria-label="edit" className={classes.button} size="small" onClick={() => this.handleClickOpen('edit', n)}>
-                        <EditIcon />
-                      </Button>
-                      <Button aria-label="delete" className={classes.button} size="small" onClick={() => this.handleClickOpenDeleteAlert(n._id)}>
-                        <DeleteIcon />
-                      </Button>
-                    </CustomTableCell>
-                  </TableRow>
-                );
-              })}
+              {this.props.users.length !== 0 ?
+                  this.props.users.map(n => {
+                  return (
+                    <TableRow className={classes.row} key={n._id}>
+                      <CustomTableCell className={classes.tablePadding}>
+                        <Avatar
+                          src={`${ProfileService}/media/` + n.image}
+                          className={classNames(classes.avatar, classes.bigAvatar)}
+                        />
+                      </CustomTableCell>
+                      <CustomTableCell className={classes.tablePadding}><center>{n.firstname + ' ' + n.lastname}</center></CustomTableCell>
+                      <CustomTableCell className={classes.tablePadding}><center>{n.address}</center></CustomTableCell>
+                      <CustomTableCell className={classes.tablePadding}><center>{n.ccode + n.contact}</center></CustomTableCell>
+                      <CustomTableCell className={classes.tablePadding}><center>{n.dob}</center></CustomTableCell>
+                      <CustomTableCell className={classes.tablePadding}><center>{n.email}</center></CustomTableCell>
+                      <CustomTableCell>
+                        <Button aria-label="edit" className={classes.button} size="small" onClick={() => this.handleClickOpen('edit', n)}>
+                          <EditIcon />
+                        </Button>
+                        <Button aria-label="delete" className={classes.button} size="small" onClick={() => this.handleClickOpenDeleteAlert(n._id)}>
+                          <DeleteIcon />
+                        </Button>
+                      </CustomTableCell>
+                    </TableRow>
+                  );
+                }) :
+                    <TableRow className={classes.row}>
+                    </TableRow>}
             </TableBody>
           </Table>
         </Paper>
