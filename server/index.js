@@ -37,6 +37,12 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 /**
+ * add middleware
+ */
+app.use(express.static(path.resolve(__dirname, "..", "client/build")));
+app.use('/', express.static(__dirname + '/media'));
+
+/**
  * get user list to home page
  * handles GET request
  * @param object req
@@ -72,20 +78,24 @@ app.post("/addUser",upload.single('file'), (req, res) => {
   });
 });
 
+/**
+ * upload image
+ * handles POST request
+ * @param object req
+ * @return json
+ */
 app.post('/userfile',upload.single('file'), function(req, res) {
-
     let file = __dirname + '/media/' +req.body.filename+'.'+req.file.mimetype.substring(6);
-
-      fs.rename(req.file.path, file, function(err) {
-        if (err) {
-          res.send(500);
-        } else {
-          res.json({
-            message: 'File uploaded successfully',
-            filename: req.file.filename
-          });
-        }
-      });
+    fs.rename(req.file.path, file, function(err) {
+      if (err) {
+        res.send(500);
+      } else {
+        res.json({
+          message: 'File uploaded successfully',
+          filename: req.file.filename
+        });
+      }
+    });
 });
 
 /**
@@ -135,6 +145,10 @@ app.get("/searchUser", (req, res) => {
     if (err) { console.log('Search user error: ', err); }
     res.json(user);
   });
+});
+
+app.get("*", (req, res) => {
+  res.sendFile(path.resolve(__dirname, "..", "client/build", "index.html"));
 });
 
 server.listen(port, () => {

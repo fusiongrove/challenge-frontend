@@ -93,7 +93,6 @@ export function uploadFail(error) {
 export const getUsers = () => dispatch => {
   axios.get(`${ProfileService}/getUsers`)
   .then(function (json) {
-    console.log('ssssssssssssssss', json);
       dispatch(_getUsers(json.data));
   })
   .catch(function (error) {
@@ -109,7 +108,6 @@ export const getUsers = () => dispatch => {
 export const addUser = data => dispatch => {
 axios.post(`${ProfileService}/addUser`, data)
   .then(function (json) {
-    console.log('Add new user: ', json);
     dispatch(_addUser(json));
   })
   .catch(function (error) {
@@ -137,7 +135,6 @@ export const uploadPic=({file})=>{
 export const editUser = data => dispatch => {
   axios.put(`${ProfileService}/editUser`, data)
   .then(function (json) {
-    console.log('Edit user: ', json);
     dispatch(_editUser(json));
   })
   .catch(function (error) {
@@ -153,7 +150,6 @@ export const editUser = data => dispatch => {
 export const deleteUser = data => dispatch => {
   axios.delete(`${ProfileService}/deleteUser`, { data: data, params: { force: true }})
   .then(function (json) {
-    console.log('Delete user: ', json);
     dispatch(_deleteUser(json));
   })
   .catch(function (error) {
@@ -169,7 +165,6 @@ export const deleteUser = data => dispatch => {
 export const searchUser = data => dispatch => {
   axios.get(`${ProfileService}/searchUser`, { params : data })
   .then(function (json) {
-    console.log('Search user: ', json);
     dispatch(_searchUser(json));
   })
   .catch(function (error) {

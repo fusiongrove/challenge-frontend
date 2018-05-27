@@ -18,6 +18,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogUser from './dialogUser';
 import {
@@ -29,8 +30,7 @@ import {
   uploadPic
 } from "../actions/profile";
 
-
-
+const ProfileService = 'http://localhost:3030';
 
 const styles = theme => ({
   root: {
@@ -60,7 +60,14 @@ const styles = theme => ({
     '&:nth-of-type(odd)': {
       backgroundColor: theme.palette.background.default,
     },
-  }
+  },
+  avatar: {
+    margin: 10,
+  },
+  bigAvatar: {
+    width: 50,
+    height: 50,
+  },
 });
 
 const CustomTableCell = withStyles(theme => ({
@@ -149,13 +156,32 @@ class Profile extends React.Component {
       image: "",
       thumbImage:"",
       type: "",
-      errorStatus: {}
+      errorStatus: {},
+      openDeleteAlert: false,
+      openEditAlert: false,
+      deleteId: ""
     };
   }
 
   componentDidMount() {
     this.props.GetUsers();
   }
+
+  handleChange = name => event => {
+    this.setState({
+      [name]: event.target.value,
+    });
+  };
+
+  onDrop = files => {
+    let file = files[0];
+    this.setState({
+      files: file,
+      thumbImage: files[0].preview,
+      filename:file.name
+    });
+    this.props.uploadPic({file:file});
+  };
 
   handleClickOpen = (type, data) => {
     if(type === 'add'){
@@ -185,14 +211,10 @@ class Profile extends React.Component {
         contact: data.contact,
         email: data.email,
         image: data.image,
-        thumbImage:"",
+        thumbImage: this.state.thumbImage,
         open: true,
       });
     }
-  };
-
-  handleClickDelete = id => {
-    this.props.DeleteUser({id: id});
   };
 
   handleClose = () => {
@@ -228,36 +250,46 @@ class Profile extends React.Component {
       }
 
     } else if (this.state.type === "Update ") {
-        this.props.EditUser({
-          id: this.state.id,
-          firstname: this.state.fname,
-          lastname: this.state.lname,
-          address: this.state.address,
-          ccode: this.state.ccode,
-          contact: this.state.contact,
-          dob: this.state.dob,
-          email: this.state.email,
-          image: this.state.filename
+        this.setState({
+          open: false,
+          openEditAlert: true
         });
     }
   };
 
-  handleChange = name => event => {
-    this.setState({
-      [name]: event.target.value,
-    });
+  handleClickOpenDeleteAlert = id => {
+    this.setState({ openDeleteAlert: true });
+    this.setState({deleteId: id});
   };
 
-  onDrop = files => {
-    let file = files[0];
-    this.setState({
-      files: file,
-      thumbImage: files[0].preview,
-      filename:file.name
-    });
-    this.props.uploadPic({file:file});
+  handleCloseDeleteAlert = () => {
+    this.setState({ openDeleteAlert: false });
   };
 
+  handleClickDelete = id => {
+    this.props.DeleteUser({id: id});
+    this.setState({ openDeleteAlert: false });
+  };
+
+  handleCloseEditAlert = () => {
+    this.setState({ openEditAlert: false });
+  };
+
+  handleClickEdit = id => {
+    this.props.DeleteUser({id: id});
+    this.setState({ openEditAlert: false });
+    this.props.EditUser({
+      id: this.state.id,
+      firstname: this.state.fname,
+      lastname: this.state.lname,
+      address: this.state.address,
+      ccode: this.state.ccode,
+      contact: this.state.contact,
+      dob: this.state.dob,
+      email: this.state.email,
+      image: this.state.filename
+    });
+  };
 
   render() {
     const { classes } = this.props;
@@ -291,8 +323,10 @@ class Profile extends React.Component {
                 return (
                   <TableRow className={classes.row} key={n._id}>
                     <CustomTableCell>
-                    <Avatar aria-label="user" className={classes.button} src={'http://localhost:3030/media/' + n.image}>
-                    </Avatar>
+                      <Avatar
+                        src={`${ProfileService}/media/` + n.image}
+                        className={classNames(classes.avatar, classes.bigAvatar)}
+                      />
                     </CustomTableCell>
                     <CustomTableCell>{n.firstname + ' ' + n.lastname}</CustomTableCell>
                     <CustomTableCell>{n.address}</CustomTableCell>
@@ -303,7 +337,7 @@ class Profile extends React.Component {
                       <Button aria-label="edit" className={classes.button} size="small" onClick={() => this.handleClickOpen('edit', n)}>
                         <EditIcon />
                       </Button>
-                      <Button aria-label="delete" className={classes.button} size="small" onClick={() => this.handleClickDelete(n._id)}>
+                      <Button aria-label="delete" className={classes.button} size="small" onClick={() => this.handleClickOpenDeleteAlert(n._id)}>
                         <DeleteIcon />
                       </Button>
                     </CustomTableCell>
@@ -344,6 +378,49 @@ class Profile extends React.Component {
           </Button>
           <Button onClick={this.handleSave} color="primary" variant="raised">
             Save
+          </Button>
+        </DialogActions>
+      </Dialog>
+      <Dialog
+        open={this.state.openDeleteAlert}
+        onClose={this.handleCloseDeleteAlert}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">{"Delete User"}</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            Are you sure you want to delete this user?
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={this.handleCloseDeleteAlert} color="primary">
+            No
+          </Button>
+          <Button onClick={() => this.handleClickDelete(this.state.deleteId)} color="primary" autoFocus>
+            Yes
+          </Button>
+        </DialogActions>
+      </Dialog>
+
+      <Dialog
+        open={this.state.openEditAlert}
+        onClose={this.handleCloseEditAlert}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">{"Update User"}</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            Are you sure you want to edit this user?
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={this.handleCloseEditAlert} color="primary">
+            No
+          </Button>
+          <Button onClick={() => this.handleClickEdit()} color="primary" autoFocus>
+            Yes
           </Button>
         </DialogActions>
       </Dialog>

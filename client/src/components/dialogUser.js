@@ -28,6 +28,10 @@ const styles = theme => ({
   },
   margin: {
     marginTop: 21
+  },
+  image: {
+    width: 200,
+    height: 170
   }
 });
 
@@ -39,18 +43,18 @@ class DialogUser extends React.Component {
           <Grid container spacing={24}>
             <Grid item xs={5}>
               <Dropzone
-                style={{ width: 200, height: 170 }}
+                style={classes.image}
                 onDrop={this.props.onDrop}
                 multiple={false}
                 accept="image/*"
               >
                 <img
-                  style={{ width: 200, height: 170 }}
+                  style={classes.image}
                   src={this.props.thumbImage}
                 />
                 <Typography component="p">
-                Try dropping some files here, or click to select files to
-                upload.
+                  Try dropping some files here, or click to select files to
+                  upload.
                 </Typography>
               </Dropzone>
             </Grid>
