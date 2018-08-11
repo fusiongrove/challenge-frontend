@@ -1,0 +1,23 @@
+{
+    "server_port": 4000,
+    "database": {
+        "mongodb": {
+            "host": "mongodb://localhost",
+            "port": 27017,
+            "name": "the_game_db"
+        }
+    },
+    "cors_urls": [
+        "http://localhost:4001"
+    ],
+    "aws": {
+        "accessKeyId": "xxxx",
+        "secretAccessKey": "xxxx",
+        "s3": {
+          "region":"us-west-1",
+          "bucket": "test",
+          "directory": "Dev",
+          "cdn_url": ""
+        }
+      }
+}
