@@ -64,7 +64,7 @@ module.exports = {
     resolve: {
         extensions: ['.js', '.jsx', '.css', '.scss'],
         alias: {
-            appConfig: path.join(__dirname, '/../src/config/dev.js')
+            appConfig: path.join(__dirname, '/../src/config/prod.js')
         }
     }
 };
