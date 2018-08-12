@@ -1,0 +1,117 @@
+@import "~bootstrap/scss/bootstrap.scss";
+
+.container {
+    margin-top: 30px;
+    min-height: 400px;
+
+    .btn-add-new-user {
+        float: right;
+    }
+}
+
+.modal-custom {
+    margin: auto;
+}
+.profile_information_margin{
+    margin: auto;
+}
+.modal-form-wrapper {
+    margin: auto;
+    padding: 40px;
+    box-shadow: 0 5px 40px rgba(202, 208, 214, 0.38);
+    border-radius: 6px;
+    border: 1px solid #e4e4e4;
+    background-color: #ffffff;
+
+    .header-wrapper {
+        .title {
+            margin: 5px;
+            letter-spacing: 1px;
+            text-align: center;
+            color: #444444;
+        }
+    }
+
+    .body-wrapper {
+        padding: 28px 0 0;
+
+        .form-group {
+            margin-bottom: 23px;
+
+            .data-key {
+                display: block;
+                color: #7f8992;
+                letter-spacing: 1px;
+            }
+            .data-input {
+                display: block;
+                color: #444444;
+                height: 40px;
+
+                border-radius: 2px;
+                border: 1px solid #e7eaed;
+                background-color: #ffffff;
+                box-shadow: none;
+            }
+        }
+
+        .actions-wrapper {
+            .btn-cancel {
+                border-radius: 2px;
+                background-color: #040707;
+                color: #ffffff;
+                font-family: Arial, Helvetica, sans-serif;
+                text-transform: uppercase;
+                letter-spacing: 2px;
+                outline: none;
+
+                width: 100%;
+                height: 40px;
+            }
+            .btn-save-form {
+                border-radius: 2px;
+                background-color: #cff204;
+                color: #040707;
+                font-family: Arial, Helvetica, sans-serif;
+                text-transform: uppercase;
+                letter-spacing: 2px;
+                outline: none;
+
+                width: 100%;
+                height: 40px;
+            }
+        }
+    }
+    &.add-new-user {
+        width: 490px;
+    }
+}
+
+// common styles
+
+.ReactModal__Overlay {
+    background-color: rgba(0,0,0,0.5) !important;
+    z-index: 1;
+
+    .ReactModal__Content {
+        background-color: transparent !important;
+        border: none !important;
+        display: inline-flex !important;
+
+        .modal-custom {
+            background-color: transparent !important;
+            border: none !important;
+            outline: none !important;
+        }
+
+    }
+}
+
+.info-message {
+    margin-bottom: 5px;
+    font-weight: 600;
+    font-size: 12px;
+    &.danger {
+      color: #d9534f;
+    }
+}
